@@ -1,7 +1,7 @@
+import { AuthenticatedUser, DashboardData, Region } from '@course-scope/contracts';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
-import { AuthenticatedUser, Region } from '../common/access.types';
 import { Enrollment } from '../database/entities/enrollment.entity';
 import { ScopeService } from './scope.service';
 
@@ -29,7 +29,7 @@ export class AnalyticsService {
     private readonly scope: ScopeService,
   ) {}
 
-  async dashboard(user: AuthenticatedUser, requestedRegion?: string) {
+  async dashboard(user: AuthenticatedUser, requestedRegion?: string): Promise<DashboardData> {
     const effectiveRegion = this.scope.resolve(user, requestedRegion);
     const [categories, summary] = await Promise.all([
       this.categoryQuery(effectiveRegion).getRawMany<CategoryRow>(),
@@ -95,4 +95,3 @@ export class AnalyticsService {
     return total ? Math.round((Number(numerator) / total) * 1000) / 10 : 0;
   }
 }
-

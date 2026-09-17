@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch",
-    "build": "nest build",
-    "typecheck": "tsc --noEmit",
-    "test": "jest --runInBand",
-    "migration:run": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:run",
-    "migration:revert": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:revert",
-    "seed": "ts-node src/database/seed.ts"
+    "dev": "pnpm --filter @course-scope/contracts build && nest start --watch",
+    "build": "pnpm --filter @course-scope/contracts build && nest build",
+    "start": "node dist/main.js",
+    "typecheck": "pnpm --filter @course-scope/contracts build && tsc --noEmit",
+    "test": "pnpm --filter @course-scope/contracts build && jest --runInBand",
+    "migration:run": "pnpm --filter @course-scope/contracts build && typeorm-ts-node-commonjs -d src/database/data-source.ts migration:run",
+    "migration:revert": "pnpm --filter @course-scope/contracts build && typeorm-ts-node-commonjs -d src/database/data-source.ts migration:revert",
+    "seed": "pnpm --filter @course-scope/contracts build && ts-node src/database/seed.ts"
   },
   "dependencies": {
+    "@course-scope/contracts": "workspace:*",
     "@nestjs/common": "11.2.5",
+    "@nestjs/config": "^12.0.0",
     "@nestjs/core": "11.2.5",
     "@nestjs/jwt": "11.0.2",
     "@nestjs/platform-express": "11.2.5",

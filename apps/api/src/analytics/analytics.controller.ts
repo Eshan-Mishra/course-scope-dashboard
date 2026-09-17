@@ -1,7 +1,7 @@
+import { AuthenticatedUser } from '@course-scope/contracts';
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { AuthenticatedUser } from '../common/access.types';
 import { AnalyticsService } from './analytics.service';
 
 @Controller('analytics')
@@ -14,4 +14,3 @@ export class AnalyticsController {
     return this.analytics.dashboard(user, region);
   }
 }
-

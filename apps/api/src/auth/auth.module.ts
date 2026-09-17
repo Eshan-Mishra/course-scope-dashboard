@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../database/entities/user.entity';
@@ -9,9 +10,12 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET ?? 'course-scope-local-only-secret',
-      signOptions: { expiresIn: '8h' },
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET') ?? 'course-scope-local-only-secret',
+        signOptions: { expiresIn: '8h' },
+      }),
     }),
   ],
   controllers: [AuthController],

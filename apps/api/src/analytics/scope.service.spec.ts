@@ -1,5 +1,5 @@
+import { AuthenticatedUser, Region, UserRole } from '@course-scope/contracts';
 import { BadRequestException, ForbiddenException } from '@nestjs/common';
-import { AuthenticatedUser, Region, UserRole } from '../common/access.types';
 import { ScopeService } from './scope.service';
 
 const admin: AuthenticatedUser = { sub: '1', email: 'admin@test', role: UserRole.ADMIN, region: null };
@@ -29,4 +29,3 @@ describe('ScopeService', () => {
     expect(() => service.resolve(admin, 'Everywhere')).toThrow(BadRequestException);
   });
 });
-

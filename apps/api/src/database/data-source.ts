@@ -1,17 +1,11 @@
 import 'reflect-metadata';
+import { ConfigModule } from '@nestjs/config';
+import { resolve } from 'node:path';
 import { DataSource } from 'typeorm';
-import { Course } from './entities/course.entity';
-import { Enrollment } from './entities/enrollment.entity';
-import { Student } from './entities/student.entity';
-import { User } from './entities/user.entity';
-import { InitSchema1726500000000 } from './migrations/1726500000000-InitSchema';
+import { databaseOptions } from './database.config';
 
-const AppDataSource = new DataSource({
-  type: 'postgres',
-  url: process.env.DATABASE_URL ?? 'postgresql://postgres:postgres@localhost:5432/course_scope',
-  entities: [User, Student, Course, Enrollment],
-  migrations: [InitSchema1726500000000],
-  synchronize: false,
-});
+ConfigModule.forRoot({ envFilePath: [resolve(__dirname, '../../../../.env')] });
+
+const AppDataSource = new DataSource(databaseOptions());
 
 export default AppDataSource;

@@ -17,4 +17,3 @@ services:
 
 volumes:
   course_scope_postgres:
-

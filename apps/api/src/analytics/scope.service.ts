@@ -1,5 +1,5 @@
+import { AuthenticatedUser, Region, UserRole } from '@course-scope/contracts';
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
-import { AuthenticatedUser, Region, UserRole } from '../common/access.types';
 
 @Injectable()
 export class ScopeService {
@@ -25,4 +25,3 @@ export class ScopeService {
     return region;
   }
 }
-

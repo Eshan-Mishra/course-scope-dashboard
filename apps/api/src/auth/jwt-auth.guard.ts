@@ -1,7 +1,7 @@
+import { AuthenticatedUser } from '@course-scope/contracts';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { AuthenticatedUser } from '../common/access.types';
 
 export const SESSION_COOKIE = 'course_scope_session';
 
@@ -22,4 +22,3 @@ export class JwtAuthGuard implements CanActivate {
     }
   }
 }
-

@@ -1,5 +1,5 @@
+import { Region, UserRole } from '@course-scope/contracts';
 import { Check, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { Region, UserRole } from '../../common/access.types';
 
 @Entity('users')
 @Unique(['email'])
@@ -20,4 +20,3 @@ export class User {
   @Column({ type: 'enum', enum: Region, nullable: true })
   region!: Region | null;
 }
-

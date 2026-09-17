@@ -1,9 +1,9 @@
+import { AuthenticatedUser } from '@course-scope/contracts';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { Repository } from 'typeorm';
-import { AuthenticatedUser } from '../common/access.types';
 import { User } from '../database/entities/user.entity';
 
 @Injectable()
@@ -28,4 +28,3 @@ export class AuthService {
     return { token: await this.jwt.signAsync(sessionUser), user: sessionUser };
   }
 }
-

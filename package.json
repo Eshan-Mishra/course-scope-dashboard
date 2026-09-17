@@ -7,9 +7,11 @@
     "node": ">=20.9.0"
   },
   "scripts": {
+    "dev:setup": "pnpm install && pnpm dev",
     "dev": "pnpm --parallel --filter './apps/*' dev",
-    "build": "pnpm --filter './apps/*' build",
-    "typecheck": "pnpm --filter './apps/*' typecheck",
+    "build": "pnpm --filter @course-scope/contracts build && pnpm --filter './apps/*' build",
+    "start": "pnpm --parallel --filter './apps/*' start",
+    "typecheck": "pnpm --filter @course-scope/contracts typecheck && pnpm --filter './apps/*' typecheck",
     "test": "pnpm --filter './apps/*' test",
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
@@ -17,4 +19,3 @@
     "db:seed": "pnpm --filter api seed"
   }
 }
-

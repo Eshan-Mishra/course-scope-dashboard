@@ -1,30 +1,9 @@
 'use client';
 
+import type { AuthenticatedUser, DashboardData } from '@course-scope/contracts';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { RevenueBarChart } from './components/revenue-bar-chart';
 import { api } from './lib/api';
-
-type User = { email: string; role: 'admin' | 'manager'; region: string | null };
-type DashboardData = {
-  scope: string;
-  availableRegions: string[];
-  revenueByCategory: Array<{ category: string; revenue: number }>;
-  categoryHealth: Array<{
-    category: string;
-    revenue: number;
-    enrollments: number;
-    completionRate: number;
-    dropRate: number;
-    averageRating: number;
-  }>;
-  summary: {
-    revenue: number;
-    enrollments: number;
-    learners: number;
-    completionRate: number;
-    averageRating: number;
-  };
-};
 
 const money = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 const demoUsers = [
@@ -34,7 +13,7 @@ const demoUsers = [
 ] as const;
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [region, setRegion] = useState('ALL');
   const [email, setEmail] = useState<string>(demoUsers[0][1]);
@@ -43,7 +22,7 @@ export default function Home() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api<{ user: User }>('/auth/me')
+    api<{ user: AuthenticatedUser }>('/auth/me')
       .then(({ user: currentUser }) => setUser(currentUser))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -66,7 +45,7 @@ export default function Home() {
     event.preventDefault();
     setError('');
     try {
-      const result = await api<{ user: User }>('/auth/login', {
+      const result = await api<{ user: AuthenticatedUser }>('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });

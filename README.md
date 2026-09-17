@@ -1,125 +1,102 @@
 # CourseScope
 
-CourseScope is a full-stack managerial dashboard for an online learning platform. It converts nested enrollment data into a relational PostgreSQL model, authenticates three demo roles, and applies region scope in the NestJS query path so a manager cannot retrieve another region's data even by calling the API directly.
+CourseScope is a role-based learning dashboard built with Next.js, NestJS, and PostgreSQL. One API endpoint and one shared widget show revenue by course category while enforcing each user's region scope in the backend.
 
-## What it shows
+## Setup
 
-- One shared revenue-by-category bar chart powered by `GET /analytics/dashboard` for every role.
-- An Admin region filter for All, East, North, and South.
-- North and South managers locked to their assigned region in the backend.
-- A role-scoped category health view that compares completion, drop-off, and ratings instead of treating revenue as the only success measure.
-
-## Request flow
-
-```mermaid
-flowchart LR
-  Browser[Next.js dashboard] -->|HTTP-only session cookie| Guard[NestJS JWT guard]
-  Guard --> Scope[ScopeService]
-  Scope -->|Admin: all or selected region| Query[Shared analytics query]
-  Scope -->|Manager: assigned region only| Query
-  Scope -->|Cross-region request| Deny[403 Forbidden]
-  Query --> DB[(PostgreSQL)]
-  Query --> Browser
-```
-
-The browser never decides authorization. It only presents the regions returned for the logged-in user. `ScopeService` derives the effective region before either analytics query is built; a manager's cross-region request fails with `403`.
-
-## Stack
+Prerequisites:
 
 - Node.js 20+
 - pnpm 10.30.1
-- Next.js 16 and React 19
-- NestJS 11, TypeORM, and PostgreSQL 17
-- Native CSS bars for the chart, avoiding a chart dependency for four values
+- A running PostgreSQL database matching the committed `.env`
 
-## Run from clone
+From a fresh clone:
 
 ```bash
-cp .env.example .env
-pnpm install
-pnpm db:up
-pnpm db:migrate
-pnpm db:seed
-pnpm dev
+pnpm dev:setup
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The API runs on `http://localhost:3001`.
+Open [http://localhost:3000](http://localhost:3000). The API runs at `http://localhost:3001`.
 
-To reset the local database, run `pnpm db:down`, remove the `course_scope_postgres` Docker volume if a completely clean database is required, then repeat the migration and seed commands.
+The command installs packages and starts the frontend and API. During API startup, pending migrations run and the supplied dataset plus demo users are seeded repeatably. The assessment permits the local throwaway `.env`, so it is committed and can be changed if PostgreSQL uses different credentials.
 
-## Demo credentials
+PostgreSQL is a project prerequisite; the start command does not install or launch a database server. Docker remains an optional helper through `pnpm db:up`.
+
+For later runs, `pnpm dev` starts the applications without reinstalling packages. Database operations remain available separately:
+
+```bash
+pnpm db:migrate
+pnpm db:seed
+```
+
+## Login credentials
 
 All demo users use the password `Demo@123`.
 
-| Role | Email | Authorized data |
+| User | Email | Data access |
 | --- | --- | --- |
 | Admin | `admin@coursescope.test` | All regions or one selected region |
 | North Manager | `north@coursescope.test` | North only |
 | South Manager | `south@coursescope.test` | South only |
 
-## Verify it
+## Approach
 
-```bash
-pnpm typecheck
-pnpm test
-pnpm build
-```
+### Data model
 
-The authorization test explicitly checks that a North Manager requesting South receives a forbidden result and that an unknown region is rejected instead of broadening the query.
+The nested JSON is normalized into four tables:
 
-Independent data checks for the seeded dataset:
+- `students`: learner identity, region, and join date.
+- `courses`: course details and category.
+- `enrollments`: the student-course relationship plus status, grade, rating, and fee paid. `(student_id, course_id)` is the composite primary key.
+- `users`: login identity, password hash, role, and assigned manager region.
 
-| Scope | Enrollments | Revenue | Completed | Completion rate |
-| --- | ---: | ---: | ---: | ---: |
-| All regions | 119 | ₹734,800 | 67 | 56.3% |
-| North | 55 | ₹353,250 | 28 | 50.9% |
-| South | 42 | ₹259,750 | 25 | 59.5% |
-| East | 22 | ₹121,800 | 14 | 63.6% |
+The migration creates the schema, foreign keys, checks, and indexes. The seed flattens nested enrollments and upserts rows inside one transaction so it can be run again without duplicating data.
 
-## Data model
+### Role-based scope
 
-The source has students with nested enrollments and a separate course list. The seed process normalizes it into:
+Authentication uses a signed JWT stored in an HTTP-only cookie. The protected dashboard endpoint resolves the permitted region before building a query:
 
-- `students`: identity, name, region, and join date.
-- `courses`: course facts such as category, level, instructor, and duration.
-- `enrollments`: the many-to-many relationship plus enrollment date, status, grade, rating, and fee paid. `(student_id, course_id)` is the natural composite key in this dataset.
-- `users`: login identity, role, and optional assigned region.
+- Admin can request all data or one valid region.
+- A manager always receives only their assigned region.
+- A manager requesting another region receives `403 Forbidden`, even when calling the API directly.
+- An unknown region receives `400 Bad Request`.
 
-Database checks preserve observed source invariants: completed enrollments require a grade, non-completed enrollments do not have one, ratings are 1–5, fees are non-negative, and managers require a region while admins do not have one.
+The frontend filter is only user experience; PostgreSQL query scoping is decided by the authenticated backend path. The same `GET /analytics/dashboard` endpoint and the same revenue chart component are used for all users.
 
-Fees are stored as integer rupees because the source values are whole rupees. If fractional currency or multiple currencies became a requirement, this should move to minor units plus a currency code.
+### Additional insight
 
-## Access-control approach
+The dashboard also shows completion rate, drop rate, and average rating by category. These metrics are calculated inside the same authorized scope because revenue alone does not show learning quality. In the supplied sample, Design has the weakest completion and rating results, making it the clearest category to investigate.
 
-The signed session contains role and assigned region. The API validates it with an HTTP-only cookie, then the shared analytics controller passes the user to `ScopeService`:
+### Decisions and trade-offs
 
-- Admin + no filter: no region predicate, so all rows are aggregated.
-- Admin + valid region: the query includes that region.
-- Manager + no filter or own region: the query includes the manager's assigned region.
-- Manager + another region: `403 Forbidden` before querying.
-- Unknown region: `400 Bad Request`.
-
-This is application-level row scoping. PostgreSQL row-level security would be a worthwhile second boundary in a multi-tenant production system, but adding it here would require per-request database session context and obscure the small assessment's core flow.
-
-## Insight and reasoning
-
-Across all regions, Data courses lead revenue at ₹252,200 and have the strongest average rating at about 4.3/5. Design is the clearest intervention opportunity: it has the lowest completion rate at 35.7%, the lowest average rating at about 2.2/5, and the lowest revenue at ₹113,450. The dashboard therefore pairs revenue with a category-health view so a manager can distinguish commercial scale from learning quality. The insight is recomputed inside the authenticated scope rather than hard-coded globally.
+- TypeORM was an implementation choice, not an assessment requirement. I chose it for NestJS repository injection, QueryBuilder-based aggregates, and one migration runner; the migration body still uses explicit PostgreSQL SQL. Prisma would also satisfy the assignment and may be simpler for a team already familiar with its schema and generated client.
+- Application-level scoping keeps the assessment flow easy to follow. PostgreSQL row-level security would be a useful second boundary for a multi-tenant production system.
+- Demo users are seeded rather than registered because user administration is outside the assignment.
+- Native CSS bars avoid adding a chart dependency for four categories.
 
 ## Working with AI
 
-AI assisted with requirement extraction, dataset profiling, issue decomposition, schema and test drafts, interface implementation, documentation, and verification planning. Each trust boundary was reviewed manually, and deterministic commands verify the result.
+AI helped extract requirements, profile the dataset, draft the schema and implementation, plan issues, and propose tests. I reviewed authentication, authorization, database predicates, validation, and the final computed totals instead of accepting generated output directly.
 
-One useful catch: an early AI-generated exploratory aggregation filtered the rows to `completed` and then divided by that filtered set, incorrectly reporting `100%` completion for every region. Comparing the output with raw status counts exposed the error. The application now calculates completed count and total count independently in PostgreSQL, and the README records known totals for regression checking.
+An early AI-generated aggregation filtered the dataset to completed enrollments before calculating the completion percentage, which incorrectly produced `100%`. Comparing it with raw status counts exposed the error. The final query independently counts completed rows and all enrollment rows before calculating the percentage.
 
-The full workflow, including the pre-implementation RCA search and significant-bug RCA gate, is documented in [docs/ai-sdlc.md](docs/ai-sdlc.md). The authorization decision is in [ADR 0001](docs/architecture/0001-server-enforced-region-scope.md), and RCA guidance lives in [docs/rca](docs/rca).
+### AI-first delivery workflow
 
-## Trade-offs
+1. Read the requirement and profile the supplied data.
+2. Search existing ADRs and RCAs before implementing a feature or fixing a bug.
+3. Define acceptance criteria and track the work through GitHub Issues and the sprint board.
+4. Use AI to draft the smallest implementation and tests.
+5. Manually review security, authorization, data integrity, validation, and failure handling.
+6. Run deterministic type, test, build, database, API, and browser checks appropriate to the change.
+7. Record durable architecture decisions in an ADR. For a significant bug, write an RCA and link the fix, regression test, and prevention work.
 
-- Demo users are seeded, not self-registered; user administration is outside the assignment.
-- A local-only JWT fallback makes clone-to-run simple. Production must provide a strong `JWT_SECRET`.
-- One dashboard endpoint returns the mandatory revenue series plus related health metrics so all values share one authorization path.
-- No chart package is used; accessible native bars are sufficient for four categories.
+A formal RCA is required for authorization bypass, data exposure, data corruption, repeated production failure, or a substantial user-visible outage. Every feature and bug starts with a related ADR/RCA search so an earlier failure pattern is not repeated.
 
-## Project management
+Project workflow references:
 
-GitHub Issues hold the epic and testable work items. The [CourseScope Delivery project](https://github.com/users/Eshan-Mishra/projects/6) is the sprint Kanban, [Sprint 1](https://github.com/Eshan-Mishra/course-scope-dashboard/milestone/1) is the delivery timebox, and the [engineering wiki](https://github.com/Eshan-Mishra/course-scope-dashboard/wiki) contains the durable AI-SDLC, architecture, security, and RCA playbooks. Pull requests must name the planning issue, the ADR/RCA reviewed before implementation, AI contribution, human correction, and verification evidence.
+- [AI-first SDLC](docs/ai-sdlc.md)
+- [Region-scope architecture decision](docs/architecture/0001-server-enforced-region-scope.md)
+- [RCA policy and template](docs/rca)
+- [Sprint Kanban](https://github.com/users/Eshan-Mishra/projects/6)
+- [Sprint 1 milestone](https://github.com/Eshan-Mishra/course-scope-dashboard/milestone/1)
+- [Engineering wiki](https://github.com/Eshan-Mishra/course-scope-dashboard/wiki)

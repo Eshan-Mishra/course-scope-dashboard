@@ -1,6 +1,6 @@
+import { AuthenticatedUser } from '@course-scope/contracts';
 import { Body, Controller, Get, HttpCode, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthenticatedUser } from '../common/access.types';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
 import { JwtAuthGuard, SESSION_COOKIE } from './jwt-auth.guard';
@@ -36,4 +36,3 @@ export class AuthController {
     response.clearCookie(SESSION_COOKIE, { path: '/' });
   }
 }
-
