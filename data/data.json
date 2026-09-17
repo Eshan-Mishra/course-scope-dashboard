@@ -1,0 +1,1454 @@
+{
+  "students": [
+    {
+      "id": "S1",
+      "name": "Aisha Singh",
+      "region": "South",
+      "joined_on": "2025-09-13",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-03-19",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 3500
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "name": "Rohan Mehta",
+      "region": "South",
+      "joined_on": "2025-09-22",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-01-13",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 2,
+          "fee_paid": 3500
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "name": "Priya Jain",
+      "region": "North",
+      "joined_on": "2025-11-06",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-06-03",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 6300
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-02-06",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 8200
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "name": "Arjun Gupta",
+      "region": "North",
+      "joined_on": "2025-10-22",
+      "enrollments": [
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-04-09",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-02-21",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 5800
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "name": "Neha Verma",
+      "region": "North",
+      "joined_on": "2025-10-09",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-06-19",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 10300
+        }
+      ]
+    },
+    {
+      "id": "S6",
+      "name": "Vikram Rao",
+      "region": "East",
+      "joined_on": "2025-10-17",
+      "enrollments": [
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-06-14",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 5300
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-05-09",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 5300
+        }
+      ]
+    },
+    {
+      "id": "S7",
+      "name": "Sara Reddy",
+      "region": "South",
+      "joined_on": "2025-09-22",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-02-15",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 3500
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-05-04",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 8400
+        },
+        {
+          "course_id": "C6",
+          "enrolled_on": "2026-02-18",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 5550
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-01-04",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 5000
+        }
+      ]
+    },
+    {
+      "id": "S8",
+      "name": "Kabir Khan",
+      "region": "North",
+      "joined_on": "2025-10-19",
+      "enrollments": [
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-06-16",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 5300
+        },
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-05-25",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 4500
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-03-15",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 10800
+        }
+      ]
+    },
+    {
+      "id": "S9",
+      "name": "Ananya Bose",
+      "region": "South",
+      "joined_on": "2025-10-01",
+      "enrollments": [
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-01-02",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 8400
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "name": "Dev Singh",
+      "region": "North",
+      "joined_on": "2025-10-09",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-05-16",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 6000
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-01-22",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 5200
+        },
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-06-02",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 7500
+        }
+      ]
+    },
+    {
+      "id": "S11",
+      "name": "Meera Reddy",
+      "region": "South",
+      "joined_on": "2025-11-26",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-02-09",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 5800
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-01-02",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 4,
+          "fee_paid": 10800
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-02-14",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 5,
+          "fee_paid": 8200
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-02-13",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 5400
+        }
+      ]
+    },
+    {
+      "id": "S12",
+      "name": "Raj Menon",
+      "region": "North",
+      "joined_on": "2025-12-10",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-02-07",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-03-02",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 5400
+        }
+      ]
+    },
+    {
+      "id": "S13",
+      "name": "Isha Verma",
+      "region": "North",
+      "joined_on": "2025-10-02",
+      "enrollments": [
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-04-04",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 5300
+        },
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-01-14",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 4,
+          "fee_paid": 7800
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-02-22",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 10500
+        }
+      ]
+    },
+    {
+      "id": "S14",
+      "name": "Aditya Bose",
+      "region": "North",
+      "joined_on": "2025-09-03",
+      "enrollments": [
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-03-10",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 5,
+          "fee_paid": 5400
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-05-01",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 3800
+        },
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-02-09",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 7500
+        }
+      ]
+    },
+    {
+      "id": "S15",
+      "name": "Diya Singh",
+      "region": "South",
+      "joined_on": "2025-10-09",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-03-17",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 5800
+        },
+        {
+          "course_id": "C6",
+          "enrolled_on": "2026-01-21",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 2,
+          "fee_paid": 5050
+        }
+      ]
+    },
+    {
+      "id": "S16",
+      "name": "Karan Khan",
+      "region": "South",
+      "joined_on": "2025-11-25",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-04-18",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 3300
+        }
+      ]
+    },
+    {
+      "id": "S17",
+      "name": "Riya Mehta",
+      "region": "North",
+      "joined_on": "2025-09-23",
+      "enrollments": [
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-03-26",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-06-04",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C6",
+          "enrolled_on": "2026-02-26",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 2,
+          "fee_paid": 5250
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-04-26",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 10500
+        }
+      ]
+    },
+    {
+      "id": "S18",
+      "name": "Nikhil Kapoor",
+      "region": "South",
+      "joined_on": "2025-09-13",
+      "enrollments": [
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-02-01",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 4500
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-03-12",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 6300
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-03-01",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 8400
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-01-04",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 10800
+        }
+      ]
+    },
+    {
+      "id": "S19",
+      "name": "Tara Reddy",
+      "region": "South",
+      "joined_on": "2025-11-14",
+      "enrollments": [
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-03-02",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 5200
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-06-24",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-03-20",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 4200
+        }
+      ]
+    },
+    {
+      "id": "S20",
+      "name": "Yash Jain",
+      "region": "North",
+      "joined_on": "2025-09-24",
+      "enrollments": [
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-02-14",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 5200
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-01-10",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 3500
+        },
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-03-15",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 4,
+          "fee_paid": 4000
+        },
+        {
+          "course_id": "C6",
+          "enrolled_on": "2026-02-22",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 5250
+        }
+      ]
+    },
+    {
+      "id": "S21",
+      "name": "Sana Singh",
+      "region": "East",
+      "joined_on": "2025-11-03",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-02-01",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 6000
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-04-14",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 8700
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-04-08",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 2,
+          "fee_paid": 3500
+        }
+      ]
+    },
+    {
+      "id": "S22",
+      "name": "Ved Kapoor",
+      "region": "North",
+      "joined_on": "2025-12-08",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-02-28",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-05-11",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 4,
+          "fee_paid": 5800
+        }
+      ]
+    },
+    {
+      "id": "S23",
+      "name": "Kiara Jain",
+      "region": "South",
+      "joined_on": "2025-12-27",
+      "enrollments": [
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-06-09",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 4,
+          "fee_paid": 4800
+        },
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-06-10",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 7500
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-01-05",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C10",
+          "enrolled_on": "2026-06-07",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 6750
+        }
+      ]
+    },
+    {
+      "id": "S24",
+      "name": "Om Nair",
+      "region": "East",
+      "joined_on": "2025-12-14",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-05-23",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 4200
+        }
+      ]
+    },
+    {
+      "id": "S25",
+      "name": "Zara Verma",
+      "region": "East",
+      "joined_on": "2025-09-12",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-05-26",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 4500
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-04-16",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 10500
+        }
+      ]
+    },
+    {
+      "id": "S26",
+      "name": "Aryan Das",
+      "region": "South",
+      "joined_on": "2025-12-24",
+      "enrollments": [
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-05-01",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 4300
+        }
+      ]
+    },
+    {
+      "id": "S27",
+      "name": "Myra Bose",
+      "region": "South",
+      "joined_on": "2025-09-03",
+      "enrollments": [
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-04-11",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 7500
+        },
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-03-25",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 4300
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-05-02",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 10500
+        }
+      ]
+    },
+    {
+      "id": "S28",
+      "name": "Reyansh Das",
+      "region": "North",
+      "joined_on": "2025-09-25",
+      "enrollments": [
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-02-08",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-02-15",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-06-23",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 6000
+        },
+        {
+          "course_id": "C10",
+          "enrolled_on": "2026-01-10",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 7050
+        }
+      ]
+    },
+    {
+      "id": "S29",
+      "name": "Anika Iyer",
+      "region": "South",
+      "joined_on": "2025-10-03",
+      "enrollments": [
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-06-20",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 8400
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-03-03",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 6300
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-04-04",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 3,
+          "fee_paid": 4800
+        }
+      ]
+    },
+    {
+      "id": "S30",
+      "name": "Ishaan Menon",
+      "region": "East",
+      "joined_on": "2025-12-23",
+      "enrollments": [
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-03-20",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 7800
+        }
+      ]
+    },
+    {
+      "id": "S31",
+      "name": "Navya Verma",
+      "region": "East",
+      "joined_on": "2025-12-27",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-03-15",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 3,
+          "fee_paid": 3500
+        },
+        {
+          "course_id": "C6",
+          "enrolled_on": "2026-03-01",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 3,
+          "fee_paid": 5050
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-03-11",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 6000
+        }
+      ]
+    },
+    {
+      "id": "S32",
+      "name": "Kabir Khan",
+      "region": "South",
+      "joined_on": "2025-10-03",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-06-16",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 2,
+          "fee_paid": 4000
+        }
+      ]
+    },
+    {
+      "id": "S33",
+      "name": "Aarav Mehta",
+      "region": "South",
+      "joined_on": "2025-11-08",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-04-18",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 5,
+          "fee_paid": 6300
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-03-12",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 3300
+        }
+      ]
+    },
+    {
+      "id": "S34",
+      "name": "Pari Gupta",
+      "region": "East",
+      "joined_on": "2025-11-08",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-05-25",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 6000
+        }
+      ]
+    },
+    {
+      "id": "S35",
+      "name": "Vivaan Rao",
+      "region": "North",
+      "joined_on": "2025-12-09",
+      "enrollments": [
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-02-12",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 5400
+        },
+        {
+          "course_id": "C10",
+          "enrolled_on": "2026-01-02",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 7050
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-04-04",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 3500
+        }
+      ]
+    },
+    {
+      "id": "S36",
+      "name": "Anvi Verma",
+      "region": "East",
+      "joined_on": "2025-12-15",
+      "enrollments": [
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-01-27",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-06-22",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 3500
+        }
+      ]
+    },
+    {
+      "id": "S37",
+      "name": "Shaurya Sharma",
+      "region": "East",
+      "joined_on": "2025-11-03",
+      "enrollments": [
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-04-15",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 5000
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-05-24",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 5400
+        },
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-01-06",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 4200
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-01-14",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 5,
+          "fee_paid": 5800
+        }
+      ]
+    },
+    {
+      "id": "S38",
+      "name": "Kavya Khan",
+      "region": "North",
+      "joined_on": "2025-10-10",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-06-19",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-02-03",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 4500
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-03-15",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 5,
+          "fee_paid": 5000
+        }
+      ]
+    },
+    {
+      "id": "S39",
+      "name": "Atharv Reddy",
+      "region": "South",
+      "joined_on": "2025-11-23",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-01-20",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 2,
+          "fee_paid": 3500
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-01-03",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 5400
+        }
+      ]
+    },
+    {
+      "id": "S40",
+      "name": "Sia Bose",
+      "region": "South",
+      "joined_on": "2025-09-25",
+      "enrollments": [
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-05-14",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 3,
+          "fee_paid": 4300
+        },
+        {
+          "course_id": "C9",
+          "enrolled_on": "2026-03-22",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 4,
+          "fee_paid": 5400
+        },
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-03-22",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 10300
+        }
+      ]
+    },
+    {
+      "id": "S41",
+      "name": "Dhruv Mehta",
+      "region": "North",
+      "joined_on": "2025-11-09",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-05-15",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 4000
+        },
+        {
+          "course_id": "C3",
+          "enrolled_on": "2026-06-15",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 7500
+        }
+      ]
+    },
+    {
+      "id": "S42",
+      "name": "Aadhya Singh",
+      "region": "South",
+      "joined_on": "2025-10-10",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-06-20",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-05-14",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 4500
+        }
+      ]
+    },
+    {
+      "id": "S43",
+      "name": "Krish Verma",
+      "region": "North",
+      "joined_on": "2025-09-21",
+      "enrollments": [
+        {
+          "course_id": "C8",
+          "enrolled_on": "2026-02-15",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 3,
+          "fee_paid": 4800
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-01-09",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 4,
+          "fee_paid": 8200
+        },
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-05-19",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 5,
+          "fee_paid": 4800
+        }
+      ]
+    },
+    {
+      "id": "S44",
+      "name": "Ira Menon",
+      "region": "North",
+      "joined_on": "2025-11-28",
+      "enrollments": [
+        {
+          "course_id": "C12",
+          "enrolled_on": "2026-04-02",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 3,
+          "fee_paid": 10500
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-04-22",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 4,
+          "fee_paid": 6000
+        }
+      ]
+    },
+    {
+      "id": "S45",
+      "name": "Rudra Sharma",
+      "region": "North",
+      "joined_on": "2025-11-28",
+      "enrollments": [
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-02-14",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 6000
+        }
+      ]
+    },
+    {
+      "id": "S46",
+      "name": "Mishka Verma",
+      "region": "North",
+      "joined_on": "2025-11-11",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-04-11",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 4000
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-01-08",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 8400
+        },
+        {
+          "course_id": "C2",
+          "enrolled_on": "2026-01-25",
+          "completion_status": "completed",
+          "grade": "C",
+          "rating": 5,
+          "fee_paid": 5000
+        }
+      ]
+    },
+    {
+      "id": "S47",
+      "name": "Arnav Reddy",
+      "region": "North",
+      "joined_on": "2025-11-01",
+      "enrollments": [
+        {
+          "course_id": "C1",
+          "enrolled_on": "2026-04-05",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 4,
+          "fee_paid": 5000
+        }
+      ]
+    },
+    {
+      "id": "S48",
+      "name": "Saanvi Das",
+      "region": "North",
+      "joined_on": "2025-10-06",
+      "enrollments": [
+        {
+          "course_id": "C10",
+          "enrolled_on": "2026-02-08",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 4,
+          "fee_paid": 6550
+        },
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-03-22",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 2,
+          "fee_paid": 4500
+        }
+      ]
+    },
+    {
+      "id": "S49",
+      "name": "Reyan Verma",
+      "region": "North",
+      "joined_on": "2025-11-19",
+      "enrollments": [
+        {
+          "course_id": "C7",
+          "enrolled_on": "2026-04-28",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 1,
+          "fee_paid": 4000
+        },
+        {
+          "course_id": "C11",
+          "enrolled_on": "2026-06-10",
+          "completion_status": "completed",
+          "grade": "A",
+          "rating": 5,
+          "fee_paid": 8400
+        }
+      ]
+    },
+    {
+      "id": "S50",
+      "name": "Amaira Khan",
+      "region": "East",
+      "joined_on": "2025-09-20",
+      "enrollments": [
+        {
+          "course_id": "C5",
+          "enrolled_on": "2026-06-07",
+          "completion_status": "completed",
+          "grade": "B",
+          "rating": 2,
+          "fee_paid": 3800
+        },
+        {
+          "course_id": "C4",
+          "enrolled_on": "2026-06-27",
+          "completion_status": "in_progress",
+          "grade": null,
+          "rating": 3,
+          "fee_paid": 6000
+        },
+        {
+          "course_id": "C10",
+          "enrolled_on": "2026-06-21",
+          "completion_status": "dropped",
+          "grade": null,
+          "rating": 2,
+          "fee_paid": 6750
+        }
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "id": "C1",
+      "title": "Intro to SQL",
+      "category": "Programming",
+      "level": "Beginner",
+      "instructor": "Dr. Rao",
+      "duration_weeks": 6
+    },
+    {
+      "id": "C2",
+      "title": "Python Fundamentals",
+      "category": "Programming",
+      "level": "Beginner",
+      "instructor": "Dr. Rao",
+      "duration_weeks": 8
+    },
+    {
+      "id": "C3",
+      "title": "Advanced Backend with Node",
+      "category": "Programming",
+      "level": "Advanced",
+      "instructor": "Dr. Rao",
+      "duration_weeks": 10
+    },
+    {
+      "id": "C4",
+      "title": "React Essentials",
+      "category": "Programming",
+      "level": "Intermediate",
+      "instructor": "Ms. Iyer",
+      "duration_weeks": 8
+    },
+    {
+      "id": "C5",
+      "title": "UI Design Basics",
+      "category": "Design",
+      "level": "Beginner",
+      "instructor": "Mr. Verma",
+      "duration_weeks": 5
+    },
+    {
+      "id": "C6",
+      "title": "Advanced Figma",
+      "category": "Design",
+      "level": "Advanced",
+      "instructor": "Mr. Verma",
+      "duration_weeks": 7
+    },
+    {
+      "id": "C7",
+      "title": "Design Systems",
+      "category": "Design",
+      "level": "Intermediate",
+      "instructor": "Ms. Nair",
+      "duration_weeks": 6
+    },
+    {
+      "id": "C8",
+      "title": "Product Management 101",
+      "category": "Business",
+      "level": "Beginner",
+      "instructor": "Ms. Nair",
+      "duration_weeks": 6
+    },
+    {
+      "id": "C9",
+      "title": "Marketing Analytics",
+      "category": "Business",
+      "level": "Intermediate",
+      "instructor": "Mr. Khanna",
+      "duration_weeks": 8
+    },
+    {
+      "id": "C10",
+      "title": "Business Strategy",
+      "category": "Business",
+      "level": "Advanced",
+      "instructor": "Mr. Khanna",
+      "duration_weeks": 9
+    },
+    {
+      "id": "C11",
+      "title": "Data Visualization",
+      "category": "Data",
+      "level": "Intermediate",
+      "instructor": "Dr. Sen",
+      "duration_weeks": 7
+    },
+    {
+      "id": "C12",
+      "title": "Machine Learning Intro",
+      "category": "Data",
+      "level": "Advanced",
+      "instructor": "Dr. Sen",
+      "duration_weeks": 12
+    }
+  ]
+}

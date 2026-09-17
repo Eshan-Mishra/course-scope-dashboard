@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible defect
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom and impact
+      description: What happened, who was affected, and how severe was it?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Minimal steps, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Logs, screenshots, request details, or failing test. Remove secrets and personal data.
+  - type: textarea
+    id: prior_rca
+    attributes:
+      label: Prior RCA search
+      description: Which docs/rca and wiki entries were checked, and what was reusable?
+    validations:
+      required: true
+  - type: checkboxes
+    id: significant
+    attributes:
+      label: RCA gate
+      options:
+        - label: This may require an RCA because it involves authorization, data exposure/corruption, recurrence, or major outage.
+

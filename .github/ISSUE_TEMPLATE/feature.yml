@@ -1,0 +1,27 @@
+name: Feature
+description: Plan a user-visible change with testable acceptance criteria
+title: "[Feature] "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: User outcome
+      description: What becomes possible, and for which role?
+    validations:
+      required: true
+  - type: textarea
+    id: rca_search
+    attributes:
+      label: RCA and ADR review
+      description: Related RCAs/ADRs checked before implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List observable pass/fail behaviors, including authorization boundaries.
+    validations:
+      required: true
+
