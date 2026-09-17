@@ -122,4 +122,4 @@ The full workflow, including the pre-implementation RCA search and significant-b
 
 ## Project management
 
-GitHub Issues hold the epic and testable work items. The GitHub Project is the sprint Kanban, and the repository wiki contains the durable AI-SDLC, architecture, security, and RCA playbooks. Pull requests must name the planning issue, the ADR/RCA reviewed before implementation, AI contribution, human correction, and verification evidence.
+GitHub Issues hold the epic and testable work items. The [CourseScope Delivery project](https://github.com/users/Eshan-Mishra/projects/6) is the sprint Kanban, [Sprint 1](https://github.com/Eshan-Mishra/course-scope-dashboard/milestone/1) is the delivery timebox, and the [engineering wiki](https://github.com/Eshan-Mishra/course-scope-dashboard/wiki) contains the durable AI-SDLC, architecture, security, and RCA playbooks. Pull requests must name the planning issue, the ADR/RCA reviewed before implementation, AI contribution, human correction, and verification evidence.
