@@ -4,29 +4,42 @@ CourseScope is a role-based learning dashboard built with Next.js, NestJS, Prism
 
 ## Setup
 
-Prerequisites:
+Prerequisites: Node.js 20+, pnpm 10.30.1, and PostgreSQL running locally.
 
-- Node.js 20+
-- pnpm 10.30.1
-- A running PostgreSQL database matching the committed `.env`
+### 1. Create the database
 
-From a fresh clone:
+Create one empty PostgreSQL database. The application will create its tables and seed data later.
+
+```bash
+createdb course_scope
+```
+
+### 2. Configure the database URL
+
+Open the committed `.env` and set `DATABASE_URL` to the database created above. Replace the placeholders with your local PostgreSQL username and password:
+
+```env
+DATABASE_URL=postgresql://<USER>:<PASSWORD>@localhost:5432/course_scope
+```
+
+### 3. Install and run
+
+From the repository root:
 
 ```bash
 pnpm dev:setup
 ```
 
+This installs packages, applies pending migrations, seeds the supplied dataset and demo users, and starts both applications. It does not create the PostgreSQL database itself.
+
 Open [http://localhost:3000](http://localhost:3000). The API runs at `http://localhost:3001`.
 
-The command installs packages and starts the frontend and API. During every API startup, `prisma migrate deploy` checks migration history: an empty database receives the full migration, while an existing database receives only pending migrations. The supplied dataset plus demo users are then seeded repeatably. The assessment permits the local throwaway `.env`, so it is committed and can be changed if PostgreSQL uses different credentials.
+### 4. Start it again later
 
-PostgreSQL is a project prerequisite; the start command does not install or launch a database server. Docker remains an optional helper through `pnpm db:up`.
-
-For later runs, `pnpm dev` starts the applications without reinstalling packages. Database operations remain available separately:
+After the first setup, use:
 
 ```bash
-pnpm db:migrate
-pnpm db:seed
+pnpm dev
 ```
 
 ## Login credentials
