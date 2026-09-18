@@ -1,6 +1,6 @@
 # CourseScope
 
-CourseScope is a role-based learning dashboard built with Next.js, NestJS, and PostgreSQL. One API endpoint and one shared widget show revenue by course category while enforcing each user's region scope in the backend.
+CourseScope is a role-based learning dashboard built with Next.js, NestJS, Prisma, and PostgreSQL. One API endpoint and one shared widget show revenue by course category while enforcing each user's region scope in the backend.
 
 ## Setup
 
@@ -43,18 +43,20 @@ All demo users use the password `Demo@123`.
 
 ### Data model
 
-The nested JSON is normalized into four tables:
+The nested JSON is normalized into four core tables:
 
 - `students`: learner identity, region, and join date.
 - `courses`: course details and category.
 - `enrollments`: the student-course relationship plus status, grade, rating, and fee paid. `(student_id, course_id)` is the composite primary key.
 - `users`: login identity, password hash, role, and assigned manager region.
 
-The migration creates the schema, foreign keys, checks, and indexes. The seed flattens nested enrollments and upserts rows inside one transaction so it can be run again without duplicating data.
+Authentication adds `auth_sessions`, `password_reset_tokens`, and `auth_audit_logs` for revocation, recovery, and security history.
+
+`apps/api/prisma/schema.prisma` is the readable model, while the versioned `.sql` migration creates the real schema, foreign keys, checks, and indexes. The seed flattens nested enrollments and upserts rows inside one transaction so it can be run again without duplicating data.
 
 ### Role-based scope
 
-Authentication uses a signed JWT stored in an HTTP-only cookie. The protected dashboard endpoint resolves the permitted region before building a query:
+Authentication uses a short-lived signed JWT plus a rotating opaque refresh token in HTTP-only cookies. Every protected request checks a revocable database session and reloads the current user before resolving the permitted region:
 
 - Admin can request all data or one valid region.
 - A manager always receives only their assigned region.
@@ -63,13 +65,16 @@ Authentication uses a signed JWT stored in an HTTP-only cookie. The protected da
 
 The frontend filter is only user experience; PostgreSQL query scoping is decided by the authenticated backend path. The same `GET /analytics/dashboard` endpoint and the same revenue chart component are used for all users.
 
+Local auth also includes login throttling and lockout, password-reset tokens, encrypted TOTP MFA, audit events, exact-origin CSRF protection, strict JWT claim validation, and logout/session revocation. Production password-reset delivery is configured through `PASSWORD_RESET_WEBHOOK_URL`.
+
 ### Additional insight
 
 The dashboard also shows completion rate, drop rate, and average rating by category. These metrics are calculated inside the same authorized scope because revenue alone does not show learning quality. In the supplied sample, Design has the weakest completion and rating results, making it the clearest category to investigate.
 
 ### Decisions and trade-offs
 
-- TypeORM was an implementation choice, not an assessment requirement. I chose it for NestJS repository injection, QueryBuilder-based aggregates, and one migration runner; the migration body still uses explicit PostgreSQL SQL. Prisma would also satisfy the assignment and may be simpler for a team already familiar with its schema and generated client.
+- Prisma keeps the persistence layer small: one declarative schema, one SQL migration, one injected client, and one seed file. The analytics still use parameterized PostgreSQL aggregates because grouped reporting is clearer and more efficient in SQL.
+- Prisma 6 is pinned deliberately: it supports the project's Node 20 baseline without the driver-adapter and ESM migration required by Prisma 7.
 - Application-level scoping keeps the assessment flow easy to follow. PostgreSQL row-level security would be a useful second boundary for a multi-tenant production system.
 - Demo users are seeded rather than registered because user administration is outside the assignment.
 - Native CSS bars avoid adding a chart dependency for four categories.

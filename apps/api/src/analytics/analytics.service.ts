@@ -1,8 +1,7 @@
 import { AuthenticatedUser, DashboardData, Region } from '@course-scope/contracts';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, SelectQueryBuilder } from 'typeorm';
-import { Enrollment } from '../database/entities/enrollment.entity';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../database/database.module';
 import { ScopeService } from './scope.service';
 
 type CategoryRow = {
@@ -25,15 +24,15 @@ type SummaryRow = {
 @Injectable()
 export class AnalyticsService {
   constructor(
-    @InjectRepository(Enrollment) private readonly enrollments: Repository<Enrollment>,
+    private readonly prisma: PrismaService,
     private readonly scope: ScopeService,
   ) {}
 
   async dashboard(user: AuthenticatedUser, requestedRegion?: string): Promise<DashboardData> {
     const effectiveRegion = this.scope.resolve(user, requestedRegion);
     const [categories, summary] = await Promise.all([
-      this.categoryQuery(effectiveRegion).getRawMany<CategoryRow>(),
-      this.summaryQuery(effectiveRegion).getRawOne<SummaryRow>(),
+      this.categoryQuery(effectiveRegion),
+      this.summaryQuery(effectiveRegion),
     ]);
 
     const categoryHealth = categories.map((row) => ({
@@ -60,34 +59,37 @@ export class AnalyticsService {
     };
   }
 
-  private baseQuery(region: Region | null): SelectQueryBuilder<Enrollment> {
-    const query = this.enrollments
-      .createQueryBuilder('enrollment')
-      .innerJoin('enrollment.course', 'course')
-      .innerJoin('enrollment.student', 'student');
-    if (region) query.andWhere('student.region = :region', { region });
-    return query;
+  private categoryQuery(region: Region | null): Promise<CategoryRow[]> {
+    const filter = region ? Prisma.sql`WHERE student.region = ${region}::"Region"` : Prisma.empty;
+    return this.prisma.$queryRaw<CategoryRow[]>(Prisma.sql`
+      SELECT course.category,
+        SUM(enrollment.fee_paid)::text AS revenue,
+        COUNT(*)::text AS enrollments,
+        COUNT(*) FILTER (WHERE enrollment.completion_status = 'completed')::text AS completed,
+        COUNT(*) FILTER (WHERE enrollment.completion_status = 'dropped')::text AS dropped,
+        ROUND(AVG(enrollment.rating), 2)::text AS "averageRating"
+      FROM enrollments enrollment
+      JOIN courses course ON course.id = enrollment.course_id
+      JOIN students student ON student.id = enrollment.student_id
+      ${filter}
+      GROUP BY course.category
+      ORDER BY course.category
+    `);
   }
 
-  private categoryQuery(region: Region | null) {
-    return this.baseQuery(region)
-      .select('course.category', 'category')
-      .addSelect('SUM(enrollment.fee_paid)', 'revenue')
-      .addSelect('COUNT(*)', 'enrollments')
-      .addSelect(`COUNT(*) FILTER (WHERE enrollment.completion_status = 'completed')`, 'completed')
-      .addSelect(`COUNT(*) FILTER (WHERE enrollment.completion_status = 'dropped')`, 'dropped')
-      .addSelect('ROUND(AVG(enrollment.rating), 2)', 'averageRating')
-      .groupBy('course.category')
-      .orderBy('course.category', 'ASC');
-  }
-
-  private summaryQuery(region: Region | null) {
-    return this.baseQuery(region)
-      .select('COALESCE(SUM(enrollment.fee_paid), 0)', 'revenue')
-      .addSelect('COUNT(*)', 'enrollments')
-      .addSelect('COUNT(DISTINCT enrollment.student_id)', 'learners')
-      .addSelect(`COUNT(*) FILTER (WHERE enrollment.completion_status = 'completed')`, 'completed')
-      .addSelect('COALESCE(ROUND(AVG(enrollment.rating), 2), 0)', 'averageRating');
+  private async summaryQuery(region: Region | null): Promise<SummaryRow | null> {
+    const filter = region ? Prisma.sql`WHERE student.region = ${region}::"Region"` : Prisma.empty;
+    const [row] = await this.prisma.$queryRaw<SummaryRow[]>(Prisma.sql`
+      SELECT COALESCE(SUM(enrollment.fee_paid), 0)::text AS revenue,
+        COUNT(*)::text AS enrollments,
+        COUNT(DISTINCT enrollment.student_id)::text AS learners,
+        COUNT(*) FILTER (WHERE enrollment.completion_status = 'completed')::text AS completed,
+        COALESCE(ROUND(AVG(enrollment.rating), 2), 0)::text AS "averageRating"
+      FROM enrollments enrollment
+      JOIN students student ON student.id = enrollment.student_id
+      ${filter}
+    `);
+    return row ?? null;
   }
 
   private percent(numerator: string, denominator: string): number {

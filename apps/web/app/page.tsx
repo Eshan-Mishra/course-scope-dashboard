@@ -18,6 +18,7 @@ export default function Home() {
   const [region, setRegion] = useState('ALL');
   const [email, setEmail] = useState<string>(demoUsers[0][1]);
   const [password, setPassword] = useState('Demo@123');
+  const [mfaCode, setMfaCode] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -47,7 +48,7 @@ export default function Home() {
     try {
       const result = await api<{ user: AuthenticatedUser }>('/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, ...(mfaCode ? { mfaCode } : {}) }),
       });
       setRegion(result.user.region ?? 'ALL');
       setUser(result.user);
@@ -89,6 +90,7 @@ export default function Home() {
           <form onSubmit={login}>
             <label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
             <label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={8} required /></label>
+            <label>MFA code (if enabled)<input inputMode="numeric" autoComplete="one-time-code" value={mfaCode} onChange={(event) => setMfaCode(event.target.value.replace(/\D/g, '').slice(0, 6))} pattern="\d{6}" /></label>
             {error && <p className="error" role="alert">{error}</p>}
             <button className="primary" type="submit">Open dashboard <span>→</span></button>
           </form>

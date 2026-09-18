@@ -22,7 +22,8 @@ This project uses AI as a reviewed engineering collaborator, not as an authority
 | Implementation | Drafted schema, API, UI, tests, and docs | Reviewed every scope decision and query predicate |
 | Verification | Proposed test cases and expected aggregates | Compared API results with independent dataset calculations |
 
+The persistence implementation was later simplified from TypeORM to Prisma after reviewing maintainability: entity, data-source, bootstrap, and migration-wrapper files were replaced by one Prisma schema, one SQL migration, one client module, and one seed. The security constraints and real PostgreSQL integration test were retained.
+
 ## AI mistake caught
 
 An early exploratory aggregation divided completed enrollments by the already-filtered completed set, producing a false `100%` completion rate for every region. The calculation was discarded and replaced with database aggregates whose numerator and denominator are independently defined. This is why AI-produced analytics are checked against raw data before being presented.
-

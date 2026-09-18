@@ -1,0 +1,11 @@
+export const ACCESS_COOKIE = 'course_scope_session';
+export const REFRESH_COOKIE = 'course_scope_refresh';
+export const JWT_ISSUER = 'course-scope-api';
+export const JWT_AUDIENCE = 'course-scope-web';
+export const ACCESS_TOKEN_TTL = '15m';
+export const ACCESS_TOKEN_TTL_MS = 15 * 60 * 1000;
+export const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+export const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+export const LOGIN_RATE_LIMIT = 10;
+export const ACCOUNT_LOCK_ATTEMPTS = 5;
+export const ACCOUNT_LOCK_MS = 15 * 60 * 1000;

@@ -1,20 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../database/entities/user.entity';
 import { AuthController } from './auth.controller';
+import { ACCESS_TOKEN_TTL, JWT_AUDIENCE, JWT_ISSUER } from './auth.constants';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET') ?? 'course-scope-local-only-secret',
-        signOptions: { expiresIn: '8h' },
+        secret: config.getOrThrow<string>('JWT_SECRET'),
+        signOptions: {
+          expiresIn: ACCESS_TOKEN_TTL,
+          issuer: JWT_ISSUER,
+          audience: JWT_AUDIENCE,
+          algorithm: 'HS256',
+        },
+        verifyOptions: { issuer: JWT_ISSUER, audience: JWT_AUDIENCE, algorithms: ['HS256'] },
       }),
     }),
   ],
