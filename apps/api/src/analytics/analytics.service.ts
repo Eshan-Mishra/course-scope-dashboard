@@ -21,6 +21,14 @@ type SummaryRow = {
   averageRating: string;
 };
 
+type RegionalRow = {
+  region: Region;
+  revenue: string;
+  learners: string;
+  enrollments: string;
+  completed: string;
+};
+
 @Injectable()
 export class AnalyticsService {
   constructor(
@@ -30,9 +38,10 @@ export class AnalyticsService {
 
   async dashboard(user: AuthenticatedUser, requestedRegion?: string): Promise<DashboardData> {
     const effectiveRegion = this.scope.resolve(user, requestedRegion);
-    const [categories, summary] = await Promise.all([
+    const [categories, summary, regions] = await Promise.all([
       this.categoryQuery(effectiveRegion),
       this.summaryQuery(effectiveRegion),
+      this.regionalQuery(effectiveRegion),
     ]);
 
     const categoryHealth = categories.map((row) => ({
@@ -49,6 +58,17 @@ export class AnalyticsService {
       availableRegions: this.scope.availableRegions(user),
       revenueByCategory: categoryHealth.map(({ category, revenue }) => ({ category, revenue })),
       categoryHealth,
+      regionalPerformance: regions.map((row) => {
+        const revenue = Number(row.revenue);
+        const learners = Number(row.learners);
+        return {
+          region: row.region,
+          revenue,
+          learners,
+          revenuePerLearner: learners ? Math.round(revenue / learners) : 0,
+          completionRate: this.percent(row.completed, row.enrollments),
+        };
+      }),
       summary: {
         revenue: Number(summary?.revenue ?? 0),
         enrollments: Number(summary?.enrollments ?? 0),
@@ -90,6 +110,22 @@ export class AnalyticsService {
       ${filter}
     `);
     return row ?? null;
+  }
+
+  private regionalQuery(region: Region | null): Promise<RegionalRow[]> {
+    const filter = region ? Prisma.sql`WHERE student.region = ${region}::"Region"` : Prisma.empty;
+    return this.prisma.$queryRaw<RegionalRow[]>(Prisma.sql`
+      SELECT student.region,
+        SUM(enrollment.fee_paid)::text AS revenue,
+        COUNT(DISTINCT enrollment.student_id)::text AS learners,
+        COUNT(*)::text AS enrollments,
+        COUNT(*) FILTER (WHERE enrollment.completion_status = 'completed')::text AS completed
+      FROM enrollments enrollment
+      JOIN students student ON student.id = enrollment.student_id
+      ${filter}
+      GROUP BY student.region
+      ORDER BY student.region
+    `);
   }
 
   private percent(numerator: string, denominator: string): number {

@@ -12,15 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma, User } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
-import {
-  createCipheriv,
-  createDecipheriv,
-  createHash,
-  randomBytes,
-  randomUUID,
-  timingSafeEqual,
-} from 'node:crypto';
-import * as OTPAuth from 'otpauth';
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { PrismaService } from '../database/database.module';
 import {
   ACCOUNT_LOCK_ATTEMPTS,
@@ -43,17 +35,13 @@ type SessionResult = {
 
 @Injectable()
 export class AuthService {
-  private readonly mfaKey: Buffer;
-
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
-  ) {
-    this.mfaKey = createHash('sha256').update(this.config.getOrThrow<string>('MFA_ENCRYPTION_KEY')).digest();
-  }
+  ) {}
 
-  async login(email: string, password: string, mfaCode: string | undefined, context: RequestContext): Promise<SessionResult> {
+  async login(email: string, password: string, context: RequestContext): Promise<SessionResult> {
     const normalizedEmail = email.toLowerCase();
     await this.assertLoginRateLimit(normalizedEmail, context);
     const user = await this.prisma.user.findUnique({ where: { email: normalizedEmail } });
@@ -69,13 +57,6 @@ export class AuthService {
       await this.audit('login_failed', context, user?.id, normalizedEmail);
       if (locked && user) await this.audit('account_locked', context, user.id, normalizedEmail);
       throw new UnauthorizedException('Invalid email or password');
-    }
-
-    if (user.mfaEnabled && (!mfaCode || !this.verifyMfa(user, mfaCode))) {
-      const locked = await this.recordFailedLogin(user);
-      await this.audit('mfa_failed', context, user.id, normalizedEmail);
-      if (locked) await this.audit('account_locked', context, user.id, normalizedEmail, { factor: 'mfa' });
-      throw new UnauthorizedException('MFA code required or invalid');
     }
 
     await this.prisma.user.update({
@@ -227,32 +208,6 @@ export class AuthService {
     });
   }
 
-  async setupMfa(user: AuthenticatedUser, password: string, context: RequestContext) {
-    const current = await this.prisma.user.findUniqueOrThrow({ where: { id: user.sub } });
-    if (current.mfaEnabled) throw new BadRequestException('MFA is already enabled');
-    if (!(await compare(password, current.passwordHash))) {
-      await this.audit('mfa_setup_reauth_failed', context, current.id, current.email);
-      throw new UnauthorizedException('Password confirmation failed');
-    }
-
-    const secret = new OTPAuth.Secret({ size: 20 });
-    const totp = this.totp(current.email, secret.base32);
-    await this.prisma.user.update({
-      where: { id: current.id },
-      data: { mfaSecretEncrypted: this.encrypt(secret.base32), mfaEnabled: false },
-    });
-    await this.audit('mfa_setup_started', context, current.id, current.email);
-    return { manualKey: secret.base32, otpauthUrl: totp.toString() };
-  }
-
-  async confirmMfa(user: AuthenticatedUser, code: string, context: RequestContext): Promise<void> {
-    const current = await this.prisma.user.findUniqueOrThrow({ where: { id: user.sub } });
-    if (!current.mfaSecretEncrypted || !this.verifyMfa(current, code)) throw new BadRequestException('Invalid MFA code');
-
-    await this.prisma.user.update({ where: { id: current.id }, data: { mfaEnabled: true } });
-    await this.audit('mfa_enabled', context, current.id, current.email);
-  }
-
   async auditLogs(user: AuthenticatedUser, limit: number) {
     if (user.role !== UserRole.ADMIN) throw new ForbiddenException('Admin access required');
     return this.prisma.authAuditLog.findMany({ orderBy: { createdAt: 'desc' }, take: Math.min(Math.max(limit, 1), 100) });
@@ -291,7 +246,7 @@ export class AuthService {
       where: {
         email,
         ipAddress: context.ipAddress,
-        event: { in: ['login_failed', 'mfa_failed'] },
+        event: 'login_failed',
         createdAt: { gte: new Date(Date.now() - LOGIN_WINDOW_MS) },
       },
     });
@@ -350,37 +305,6 @@ export class AuthService {
     const actual = Buffer.from(this.tokenHash(token));
     const stored = Buffer.from(expected.trim());
     return actual.length === stored.length && timingSafeEqual(actual, stored);
-  }
-
-  private totp(email: string, base32Secret: string): OTPAuth.TOTP {
-    return new OTPAuth.TOTP({
-      issuer: 'CourseScope',
-      label: email,
-      algorithm: 'SHA1',
-      digits: 6,
-      period: 30,
-      secret: OTPAuth.Secret.fromBase32(base32Secret),
-    });
-  }
-
-  private verifyMfa(user: User, code: string): boolean {
-    if (!user.mfaSecretEncrypted) return false;
-    return this.totp(user.email, this.decrypt(user.mfaSecretEncrypted)).validate({ token: code, window: 1 }) !== null;
-  }
-
-  private encrypt(value: string): string {
-    const iv = randomBytes(12);
-    const cipher = createCipheriv('aes-256-gcm', this.mfaKey, iv);
-    const encrypted = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
-    return `${iv.toString('base64url')}.${cipher.getAuthTag().toString('base64url')}.${encrypted.toString('base64url')}`;
-  }
-
-  private decrypt(value: string): string {
-    const [iv, tag, encrypted] = value.split('.').map((part) => Buffer.from(part, 'base64url'));
-    if (!iv || !tag || !encrypted) throw new Error('Invalid encrypted MFA secret');
-    const decipher = createDecipheriv('aes-256-gcm', this.mfaKey, iv);
-    decipher.setAuthTag(tag);
-    return Buffer.concat([decipher.update(encrypted), decipher.final()]).toString('utf8');
   }
 
   private async deliverReset(webhook: string, email: string, token: string): Promise<void> {

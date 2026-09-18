@@ -32,8 +32,6 @@ model User {
   region              Region?
   failedLoginAttempts Int                  @default(0) @map("failed_login_attempts")
   lockedUntil         DateTime?            @map("locked_until") @db.Timestamptz(3)
-  mfaSecretEncrypted  String?              @map("mfa_secret_encrypted") @db.VarChar(512)
-  mfaEnabled          Boolean              @default(false) @map("mfa_enabled")
   passwordChangedAt   DateTime             @default(now()) @map("password_changed_at") @db.Timestamptz(3)
   sessions            AuthSession[]
   passwordResetTokens PasswordResetToken[]

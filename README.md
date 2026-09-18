@@ -1,6 +1,6 @@
 # CourseScope
 
-CourseScope is a role-based learning dashboard built with Next.js, NestJS, Prisma, and PostgreSQL. One API endpoint and one shared widget show revenue by course category while enforcing each user's region scope in the backend.
+CourseScope is a role-based learning dashboard built with Next.js, NestJS, Prisma, and PostgreSQL. One protected API response powers revenue, regional financial efficiency, and learning-health visuals while enforcing each user's region scope in the backend.
 
 ## Setup
 
@@ -18,7 +18,7 @@ pnpm dev:setup
 
 Open [http://localhost:3000](http://localhost:3000). The API runs at `http://localhost:3001`.
 
-The command installs packages and starts the frontend and API. During API startup, pending migrations run and the supplied dataset plus demo users are seeded repeatably. The assessment permits the local throwaway `.env`, so it is committed and can be changed if PostgreSQL uses different credentials.
+The command installs packages and starts the frontend and API. During every API startup, `prisma migrate deploy` checks migration history: an empty database receives the full migration, while an existing database receives only pending migrations. The supplied dataset plus demo users are then seeded repeatably. The assessment permits the local throwaway `.env`, so it is committed and can be changed if PostgreSQL uses different credentials.
 
 PostgreSQL is a project prerequisite; the start command does not install or launch a database server. Docker remains an optional helper through `pnpm db:up`.
 
@@ -65,11 +65,11 @@ Authentication uses a short-lived signed JWT plus a rotating opaque refresh toke
 
 The frontend filter is only user experience; PostgreSQL query scoping is decided by the authenticated backend path. The same `GET /analytics/dashboard` endpoint and the same revenue chart component are used for all users.
 
-Local auth also includes login throttling and lockout, password-reset tokens, encrypted TOTP MFA, audit events, exact-origin CSRF protection, strict JWT claim validation, and logout/session revocation. Production password-reset delivery is configured through `PASSWORD_RESET_WEBHOOK_URL`.
+Local auth also includes login throttling and lockout, password-reset tokens, audit events, exact-origin CSRF protection, strict JWT claim validation, and logout/session revocation. Production password-reset delivery is configured through `PASSWORD_RESET_WEBHOOK_URL`.
 
 ### Additional insight
 
-The dashboard also shows completion rate, drop rate, and average rating by category. These metrics are calculated inside the same authorized scope because revenue alone does not show learning quality. In the supplied sample, Design has the weakest completion and rating results, making it the clearest category to investigate.
+The dashboard also shows completion rate, drop rate, and average rating by category. A visual regional financial pulse pairs revenue per learner with completion rate, so high revenue is not mistaken for efficient or healthy delivery. Every metric is calculated inside the same authorized scope. In the supplied sample, Design has the weakest completion and rating results, making it the clearest category to investigate.
 
 ### Decisions and trade-offs
 

@@ -17,7 +17,7 @@ This project uses AI as a reviewed engineering collaborator, not as an authority
 | Stage | AI contribution | Human review |
 | --- | --- | --- |
 | Discovery | Extracted requirements and profiled the dataset | Confirmed the core risk is server-side region isolation |
-| Planning | Proposed an issue breakdown and acceptance criteria | Cut speculative features and kept one shared API/widget path |
+| Planning | Proposed an issue breakdown and acceptance criteria | Cut speculative features and kept one shared scoped API/contract path |
 | Design | Suggested role claims plus query scoping | Rejected UI-only filtering as an authorization mechanism |
 | Implementation | Drafted schema, API, UI, tests, and docs | Reviewed every scope decision and query predicate |
 | Verification | Proposed test cases and expected aggregates | Compared API results with independent dataset calculations |

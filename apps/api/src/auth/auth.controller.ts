@@ -5,7 +5,7 @@ import { AuthService, RequestContext } from './auth.service';
 import { ACCESS_COOKIE, ACCESS_TOKEN_TTL_MS, REFRESH_COOKIE, REFRESH_TOKEN_TTL_MS } from './auth.constants';
 import { CurrentUser } from './current-user.decorator';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { LoginDto, MfaCodeDto, MfaSetupDto, PasswordResetConfirmDto, PasswordResetRequestDto } from './login.dto';
+import { LoginDto, PasswordResetConfirmDto, PasswordResetRequestDto } from './login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +14,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(200)
   async login(@Body() input: LoginDto, @Req() request: Request, @Res({ passthrough: true }) response: Response) {
-    const result = await this.auth.login(input.email, input.password, input.mfaCode, this.context(request));
+    const result = await this.auth.login(input.email, input.password, this.context(request));
     this.setSessionCookies(response, result.accessToken, result.refreshToken);
     return { user: result.user };
   }
@@ -54,19 +54,6 @@ export class AuthController {
   @HttpCode(204)
   confirmPasswordReset(@Body() input: PasswordResetConfirmDto, @Req() request: Request): Promise<void> {
     return this.auth.confirmPasswordReset(input.token, input.newPassword, this.context(request));
-  }
-
-  @Post('mfa/setup')
-  @UseGuards(JwtAuthGuard)
-  setupMfa(@CurrentUser() user: AuthenticatedUser, @Body() input: MfaSetupDto, @Req() request: Request) {
-    return this.auth.setupMfa(user, input.password, this.context(request));
-  }
-
-  @Post('mfa/confirm')
-  @HttpCode(204)
-  @UseGuards(JwtAuthGuard)
-  confirmMfa(@CurrentUser() user: AuthenticatedUser, @Body() input: MfaCodeDto, @Req() request: Request) {
-    return this.auth.confirmMfa(user, input.code, this.context(request));
   }
 
   @Get('audit')

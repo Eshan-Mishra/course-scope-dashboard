@@ -29,11 +29,20 @@ export type CategoryHealth = {
   averageRating: number;
 };
 
+export type RegionalPerformance = {
+  region: Region;
+  revenue: number;
+  learners: number;
+  revenuePerLearner: number;
+  completionRate: number;
+};
+
 export type DashboardData = {
   scope: Region | 'ALL';
   availableRegions: Region[];
   revenueByCategory: Array<{ category: string; revenue: number }>;
   categoryHealth: CategoryHealth[];
+  regionalPerformance: RegionalPerformance[];
   summary: {
     revenue: number;
     enrollments: number;

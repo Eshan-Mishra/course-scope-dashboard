@@ -52,7 +52,7 @@ input:focus, select:focus { border-color: var(--forest); box-shadow: 0 0 0 3px #
 .dashboard-heading h1 { margin: .45rem 0 .35rem; font-family: Georgia, serif; font-size: clamp(2.7rem, 5vw, 5rem); font-weight: 500; letter-spacing: -.045em; }
 .dashboard-heading p { margin: 0; color: var(--muted); }
 .scope-control { min-width: 210px; }
-.metric-grid, .chart-panel, .insight-grid, .banner { margin-left: clamp(1.25rem, 5vw, 5rem); margin-right: clamp(1.25rem, 5vw, 5rem); }
+.metric-grid, .chart-panel, .financial-pulse, .insight-grid, .banner { margin-left: clamp(1.25rem, 5vw, 5rem); margin-right: clamp(1.25rem, 5vw, 5rem); }
 .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--line); }
 .metric-grid article { min-height: 154px; display: flex; flex-direction: column; justify-content: space-between; padding: 1.35rem; background: var(--panel); }
 .metric-grid span, .metric-grid small { color: var(--muted); }
@@ -68,6 +68,23 @@ input:focus, select:focus { border-color: var(--forest); box-shadow: 0 0 0 3px #
 .bar-track { height: 26px; overflow: hidden; border-radius: 6px; background: #edf0e9; }
 .bar { height: 100%; border-radius: 6px; }
 .bar-1 { background: var(--lime); }.bar-2 { background: var(--blue); }.bar-3 { background: var(--orange); }.bar-4 { background: var(--purple); }
+.financial-pulse { margin-top: 1.2rem; overflow: hidden; }
+.financial-pulse-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; padding: clamp(1.3rem, 3vw, 2.2rem); border-bottom: 1px solid var(--line); }
+.financial-pulse-heading p { max-width: 440px; margin: 0; text-align: right; }
+.financial-regions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.financial-region { min-width: 0; padding: clamp(1.3rem, 3vw, 2rem); }
+.financial-region + .financial-region { border-left: 1px solid var(--line); }
+.financial-region-title { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.financial-region-title strong { font-family: Georgia, serif; font-size: 1.45rem; }
+.financial-region-title span, .financial-label, .financial-region small { color: var(--muted); font-size: .76rem; }
+.financial-region-core { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.6rem 0; }
+.financial-region-core > div:first-child { min-width: 0; display: grid; gap: .35rem; }
+.financial-value { overflow-wrap: anywhere; font-family: Georgia, serif; font-size: clamp(1.75rem, 3vw, 2.8rem); font-weight: 500; letter-spacing: -.04em; }
+.completion-ring { --completion: 0deg; flex: 0 0 88px; width: 88px; aspect-ratio: 1; display: grid; place-content: center; border-radius: 50%; background: radial-gradient(circle, var(--panel) 56%, transparent 58%), conic-gradient(var(--forest) var(--completion), #e5e9e1 0); text-align: center; }
+.completion-ring strong { font-size: 1rem; }
+.completion-ring span { color: var(--muted); font-size: .6rem; text-transform: uppercase; }
+.yield-track { height: 7px; margin-bottom: .65rem; overflow: hidden; border-radius: 99px; background: #e9ede6; }
+.yield-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--lime), var(--forest)); }
 .insight-grid { display: grid; grid-template-columns: minmax(260px, .75fr) minmax(0, 1.65fr); gap: 1.2rem; padding: 1.2rem 0 5rem; }
 .insight-grid .panel { padding: clamp(1.3rem, 3vw, 2rem); }
 .insight-copy { background: var(--forest); color: white; }
@@ -87,6 +104,8 @@ thead th { color: var(--muted); font-size: .7rem; letter-spacing: .08em; text-tr
   .trust-line { flex-wrap: wrap; margin-top: 2rem; }
   .login-card { padding: 3rem 1.5rem; }
   .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .financial-regions { grid-template-columns: 1fr; }
+  .financial-region + .financial-region { border-top: 1px solid var(--line); border-left: 0; }
   .insight-grid { grid-template-columns: 1fr; }
 }
 
@@ -99,6 +118,8 @@ thead th { color: var(--muted); font-size: .7rem; letter-spacing: .08em; text-tr
   .dashboard-heading { align-items: stretch; flex-direction: column; padding-top: 2.5rem; }
   .scope-control { width: 100%; }
   .metric-grid { grid-template-columns: 1fr; }
+  .financial-pulse-heading { align-items: start; flex-direction: column; gap: .5rem; }
+  .financial-pulse-heading p { text-align: left; }
   .bar-row { grid-template-columns: 88px 1fr; gap: .7rem; }
   .bar-row strong { grid-column: 2; text-align: left; }
   .role-switcher { grid-template-columns: 1fr; }
